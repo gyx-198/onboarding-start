@@ -59,7 +59,10 @@ end
 always@(posedge clk or negedge rst_n) begin
   if (!rst_n) begin
     transaction_complete <= 0;
-  end else if (transaction_ready && !transaction_complete) begin
+    en_out <= 0;
+    en_pwm_mode <= 0;
+    pwm_duty_cycle <= 0;
+  end else if (transaction_ready && !transaction_complete && packet[15] == 1'b1) begin
     // en_out <= 0; en_pwm_mode <= 0; pwm_duty_cycle <= 0;
     case(packet[15:8])
       8'h80: en_out[7:0] <= packet[7:0];
