@@ -35,7 +35,7 @@ module tt_um_uwasic_gyx (
     .clk(clk),
     .rst_n(rst_n),
     .en_out({en_reg_out_15_8, en_reg_out_7_0}),
-    .en_pwm_mode({en_reg_pwm_15_8, en_reg_pwm_15_8}),
+    .en_pwm_mode({en_reg_pwm_15_8, en_reg_pwm_7_0}),
     .pwm_duty_cycle(pwm_duty_cycle)
   );
 
