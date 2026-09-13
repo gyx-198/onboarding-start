@@ -17,8 +17,8 @@ module tt_um_uwasic_gyx (
 );
 
   // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
-  assign uio_out = 0;
+  // assign uo_out  = ui_in + uio_in;  // Example: uo_out is the sum of ui_in and uio_in
+  // assign uio_out = 0;
   assign uio_oe  = 8'hFF; // Write only
 
   // Create wires to refer to the values of the registers
@@ -35,7 +35,7 @@ module tt_um_uwasic_gyx (
     .clk(clk),
     .rst_n(rst_n),
     .en_out({en_reg_out_15_8, en_reg_out_7_0}),
-    .en_reg_pwm({en_reg_pwm_15_8, en_reg_pwm_15_8}),
+    .en_pwm_mode({en_reg_pwm_15_8, en_reg_pwm_15_8}),
     .pwm_duty_cycle(pwm_duty_cycle)
   );
 

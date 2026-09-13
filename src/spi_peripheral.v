@@ -6,9 +6,9 @@ module spi_peripheral (
   input SCLK,
   input clk,
   input rst_n, // low to reset
-  output [15:0] en_out,
-  output [15:0] en_pwm_mode,
-  output [7:0] pwm_duty_cycle
+  output reg [15:0] en_out,
+  output reg [15:0] en_pwm_mode,
+  output reg [7:0] pwm_duty_cycle
 );
 
 // spi mode 0, data is sampled on rising SCLK and shifted out on falling SCLK, clock idle state is 0
@@ -60,13 +60,13 @@ always@(posedge clk or negedge rst_n) begin
   if (!rst_n) begin
     transaction_complete <= 0;
   end else if (transaction_ready && !transaction_complete) begin
+    // en_out <= 0; en_pwm_mode <= 0; pwm_duty_cycle <= 0;
     case(packet[15:8])
-      8'h80: en_out[7:0] <= packet[7:0]; en_pwm_mode <= 0; pwm_duty_cycle <= 0;
-      8'h81: en_out[15:8] <= packet[7:0]; en_pwm_mode <= 0; pwm_duty_cycle <= 0;
-      8'h82: en_pwm_mode[7:0] <= packet[7:0]; en_out <= 0; pwm_duty_cycle <= 0;
-      8'h83: en_pwm_mode[15:8] <= packet[7:0]; en_out <= 0; pwm_duty_cycle <= 0;
-      8'h84: pwm_duty_cycle <= packet[7:0]; en_out <= 0; en_pwm_mode <= 0;
-      default: en_out <= 0; en_pwm_mode <= 0; pwm_duty_cycle <= 0;
+      8'h80: en_out[7:0] <= packet[7:0];
+      8'h81: en_out[15:8] <= packet[7:0];
+      8'h82: en_pwm_mode[7:0] <= packet[7:0];
+      8'h83: en_pwm_mode[15:8] <= packet[7:0];
+      8'h84: pwm_duty_cycle <= packet[7:0];
     endcase
     transaction_complete <= 1;
   end else if (!transaction_ready && transaction_complete) transaction_complete <= 0;
